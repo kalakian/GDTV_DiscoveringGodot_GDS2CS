@@ -8,6 +8,18 @@ public class LoonyLips : Control
         var prompts = new String[] { "Del", "ham", "mushroom", "tasty" };
         var story = "Once upon a time, {0} ate a {1} and {2} pizza, which was very {3}.";
 
-        GetNode<Label>("DisplayText").Text = String.Format(story, prompts);
+        GetNode<Label>("VBoxContainer/DisplayText").Text = String.Format(story, prompts);
+        GetNode<LineEdit>("VBoxContainer/PlayerText").GrabFocus();
+    }
+
+    public void OnPlayerTextTextEntered(String newText)
+    {
+        UpdateDisplayText(newText);
+    }
+
+    public void UpdateDisplayText(String newText)
+    {
+        GetNode<Label>("VBoxContainer/DisplayText").Text = newText;
+        GetNode<LineEdit>("VBoxContainer/PlayerText").Clear();
     }
 }
