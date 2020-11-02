@@ -9,7 +9,7 @@ public class LoonyLips : Control
         var story = "Once upon a time, {0} ate a {1} and {2} pizza, which was very {3}.";
 
         GetNode<Label>("VBoxContainer/DisplayText").Text = String.Format(story, prompts);
-        GetNode<LineEdit>("VBoxContainer/PlayerText").GrabFocus();
+        GetNode<LineEdit>("VBoxContainer/HBoxContainer/PlayerText").GrabFocus();
     }
 
     public void OnPlayerTextTextEntered(String newText)
@@ -17,9 +17,15 @@ public class LoonyLips : Control
         UpdateDisplayText(newText);
     }
 
+    public void OnOkButtonPressed()
+    {
+        var newText = GetNode<LineEdit>("VBoxContainer/HBoxContainer/PlayerText").Text;
+        UpdateDisplayText(newText);
+    }
+
     public void UpdateDisplayText(String newText)
     {
         GetNode<Label>("VBoxContainer/DisplayText").Text = newText;
-        GetNode<LineEdit>("VBoxContainer/PlayerText").Clear();
+        GetNode<LineEdit>("VBoxContainer/HBoxContainer/PlayerText").Clear();
     }
 }
