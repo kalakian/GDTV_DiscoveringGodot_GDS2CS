@@ -30,7 +30,14 @@ public class LoonyLips : Control
 
     public void OnOkButtonPressed()
     {
-        AddToPlayerWords();
+        if (IsStoryDone())
+        {
+            GetTree().ReloadCurrentScene();
+        }
+        else
+        {
+            AddToPlayerWords();
+        }
     }
 
     public void AddToPlayerWords()
@@ -50,7 +57,7 @@ public class LoonyLips : Control
     {
         if (IsStoryDone())
         {
-            TellStory();
+            EndGame();
         }
         else
         {
@@ -66,5 +73,12 @@ public class LoonyLips : Control
     public void PromptPlayer()
     {
         _displayText.Text += "May I have " + _prompts[_playerWords.Count] + " please?";
+    }
+
+    public void EndGame()
+    {
+        _playerText.QueueFree();
+        GetNode<Label>("VBoxContainer/HBoxContainer/ButtonLabel").Text = "Again?";
+        TellStory();
     }
 }

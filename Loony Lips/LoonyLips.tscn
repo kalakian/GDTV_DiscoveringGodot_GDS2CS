@@ -64,6 +64,7 @@ margin_top = 479.0
 margin_right = 976.0
 margin_bottom = 552.0
 custom_constants/separation = 12
+alignment = 2
 
 [node name="PlayerText" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
 margin_right = 821.0
@@ -71,17 +72,9 @@ margin_bottom = 73.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 2 )
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-margin_left = 833.0
-margin_top = 5.0
-margin_right = 891.0
-margin_bottom = 68.0
-custom_fonts/font = SubResource( 3 )
-text = "Ok"
-
 [node name="OkButton" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
-margin_left = 903.0
-margin_right = 976.0
+margin_left = 833.0
+margin_right = 906.0
 margin_bottom = 73.0
 rect_min_size = Vector2( 73, 73 )
 focus_mode = 0
@@ -91,5 +84,13 @@ expand = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ButtonLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_left = 918.0
+margin_top = 5.0
+margin_right = 976.0
+margin_bottom = 68.0
+custom_fonts/font = SubResource( 3 )
+text = "Ok"
 [connection signal="text_entered" from="VBoxContainer/HBoxContainer/PlayerText" to="." method="OnPlayerTextTextEntered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/OkButton" to="." method="OnOkButtonPressed"]
