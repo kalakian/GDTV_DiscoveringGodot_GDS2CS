@@ -15,7 +15,7 @@ public class LoonyLips : Control
     public override void _Ready()
     {
         GD.Randomize();
-        _storybook = LoadStoryBookFromJSON("StoryBook.json");
+        _storybook = LoadStoryBookFromJSON("res://StoryBook.json");
         SetCurrentStory();
 
         _displayText = GetNode<Label>("VBoxContainer/DisplayText");
