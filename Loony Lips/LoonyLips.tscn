@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://LoonyLips.cs" type="Script" id=1]
 [ext_resource path="res://gfx/blackboard.jpg" type="Texture" id=2]
 [ext_resource path="res://gfx/Feltpen.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://gfx/blue_button11.png" type="Texture" id=4]
 [ext_resource path="res://gfx/blue_button12.png" type="Texture" id=5]
+[ext_resource path="res://Story.cs" type="Script" id=6]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -92,5 +93,17 @@ margin_right = 976.0
 margin_bottom = 68.0
 custom_fonts/font = SubResource( 3 )
 text = "Ok"
+
+[node name="StoryBook" type="Node" parent="."]
+
+[node name="Story0" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+Prompts = PoolStringArray( "a name", "a noun", "a noun", "an adverb" )
+StoryText = "Once upon a time, {0} ate a {1} and {2} pizza, which was very {3}."
+
+[node name="Story1" type="Node" parent="StoryBook"]
+script = ExtResource( 6 )
+Prompts = PoolStringArray( "a noun", "a name", "an adjective", "another noun", "another name" )
+StoryText = "There once was a {0} called {1} who searched far and wide for the mythical {2} {3} of {4}"
 [connection signal="text_entered" from="VBoxContainer/HBoxContainer/PlayerText" to="." method="OnPlayerTextTextEntered"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/OkButton" to="." method="OnOkButtonPressed"]
