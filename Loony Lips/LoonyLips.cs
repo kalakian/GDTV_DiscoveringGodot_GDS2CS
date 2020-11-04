@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class LoonyLips : Control
 {
     List<String> _playerWords = new List<String>();
+    List<Story> _storybook;
     Story _currentStory;
 
     Label _displayText;
@@ -14,7 +15,7 @@ public class LoonyLips : Control
     public override void _Ready()
     {
         GD.Randomize();
-
+        _storybook = LoadStoryBookFromJSON("StoryBook.json");
         SetCurrentStory();
 
         _displayText = GetNode<Label>("VBoxContainer/DisplayText");
@@ -28,9 +29,41 @@ public class LoonyLips : Control
 
     void SetCurrentStory()
     {
-        var numStories = GetNode("StoryBook").GetChildCount();
-        var selectedStory = (int)(GD.Randi() % numStories);
-        _currentStory = GetNode("StoryBook").GetChild<Story>(selectedStory);
+        var selectedStory = (int)(GD.Randi() % _storybook.Count);
+        _currentStory = _storybook[selectedStory];
+    }
+
+    List<Story> LoadStoryBookFromJSON(String filename)
+    {
+        // Load the JSON file and convert to a Godot Array
+        var file = new File();
+        file.Open(filename, File.ModeFlags.Read);
+        var text = file.GetAsText();
+        var data = JSON.Parse(text).Result as Godot.Collections.Array;
+        file.Close();
+
+        List<Story> storybook = new List<Story>();
+        // Convert all entries in the data Array to Stories
+        foreach (Godot.Collections.Dictionary entry in data)
+        {
+            Story story = new Story();
+
+            // Convert prompts from a Godot Array, and put into the Story instance
+            var prompts = entry["prompts"] as Godot.Collections.Array;
+            List<String> promptList = new List<string>();
+            foreach (String prompt in prompts)
+            {
+                promptList.Add(prompt);
+            }
+            story.Prompts = promptList.ToArray();
+
+            story.StoryText = entry["story"] as String;
+
+            // Add the created story to the storybook
+            storybook.Add(story);
+        }
+
+        return storybook;
     }
 
     public void OnPlayerTextTextEntered(String newText)
