@@ -3,10 +3,17 @@ using System;
 
 public class Player : KinematicBody2D
 {
+    AnimatedSprite _animatedSprite;
+
     Vector2 _motion = new Vector2();
-    const int _speed = 1000;
+    const int _speed = 1500;
     const int _gravity = 300;
-    const int _jumpSpeed = 3000;
+    const int _jumpSpeed = 4000;
+
+    public override void _Ready()
+    {
+        _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+    }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -15,6 +22,8 @@ public class Player : KinematicBody2D
         ApplyGravity();
         Jump();
         Move();
+        Animate();
+
         MoveAndSlide(_motion, Vector2.Up);
     }
 
@@ -32,7 +41,7 @@ public class Player : KinematicBody2D
 
     public void Jump()
     {
-        if (Input.IsActionJustPressed("jump") && IsOnFloor())
+        if (Input.IsActionPressed("jump") && IsOnFloor())
         {
             _motion.y -= _jumpSpeed;
         }
@@ -48,5 +57,22 @@ public class Player : KinematicBody2D
         {
             _motion.x += _speed;
         }
+    }
+
+    public void Animate()
+    {
+        if (_motion.y < 0)
+        {
+            _animatedSprite.Play("jump");
+        }
+        else if (_motion.x != 0)
+        {
+            _animatedSprite.Play("walk");
+        }
+        else
+        {
+            _animatedSprite.Play("idle");
+        }
+        _animatedSprite.FlipH = (_motion.x < 0);
     }
 }
